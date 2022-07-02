@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C960CCE2870EE3000C11833 /* HabitsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C960CCD2870EE2F00C11833 /* HabitsStore.swift */; };
 		5CA3BB7A2870C7840069B9EA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA3BB792870C7840069B9EA /* AppDelegate.swift */; };
 		5CA3BB7C2870C7840069B9EA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA3BB7B2870C7840069B9EA /* SceneDelegate.swift */; };
 		5CA3BB7E2870C7840069B9EA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA3BB7D2870C7840069B9EA /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C960CCD2870EE2F00C11833 /* HabitsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsStore.swift; sourceTree = "<group>"; };
 		5CA3BB762870C7840069B9EA /* MyHabits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHabits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CA3BB792870C7840069B9EA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CA3BB7B2870C7840069B9EA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				5CA3BB792870C7840069B9EA /* AppDelegate.swift */,
 				5CA3BB7B2870C7840069B9EA /* SceneDelegate.swift */,
 				5CA3BB7D2870C7840069B9EA /* ViewController.swift */,
+				5C960CCD2870EE2F00C11833 /* HabitsStore.swift */,
 				5CA3BB7F2870C7840069B9EA /* Main.storyboard */,
 				5CA3BB822870C7850069B9EA /* Assets.xcassets */,
 				5CA3BB842870C7850069B9EA /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C960CCE2870EE3000C11833 /* HabitsStore.swift in Sources */,
 				5CA3BB7E2870C7840069B9EA /* ViewController.swift in Sources */,
 				5CA3BB7A2870C7840069B9EA /* AppDelegate.swift in Sources */,
 				5CA3BB7C2870C7840069B9EA /* SceneDelegate.swift in Sources */,
