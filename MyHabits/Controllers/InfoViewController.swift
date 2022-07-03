@@ -24,12 +24,14 @@ class InfoViewController: UIViewController {
         return view
     }()
     
-    
-    
-    private func stupView() {
-        
-        view.backgroundColor = .white
-    }
+    private lazy var headerTextLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Привычка за 21 день"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        label.textColor = .black
+        return label
+    }()
     
     private func setupNavigationBar() {
         
@@ -39,10 +41,33 @@ class InfoViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
+    private func setupConstraints() {
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            headerTextLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 22),
+            headerTextLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            headerTextLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16)
+        ])
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .white
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(headerTextLabel)
         setupNavigationBar()
-        stupView()
+        setupConstraints()
     }
 }
