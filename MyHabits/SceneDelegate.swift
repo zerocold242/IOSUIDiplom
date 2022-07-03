@@ -16,33 +16,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-  
         
-        func createHabitsViewController() -> UINavigationController {
+        func createHabitsNC() -> UINavigationController {
             let habitsVC = HabitsViewController()
+            let habitsNC = UINavigationController(rootViewController: habitsVC)
+            habitsNC.navigationBar.tintColor = .purpleColor
             habitsVC.tabBarItem = UITabBarItem(title: "Привычки",
-                                                         image: UIImage(named: "Shape-2"),
-                                                         tag: 0)
-            return UINavigationController(rootViewController: habitsVC)
+                                               image: UIImage(named: "Shape-2"),
+                                               tag: 0)
+            return habitsNC
         }
         
-        func createInfoViewController() -> UINavigationController {
+        func createInfoNC() -> UINavigationController {
             let infoVC = InfoViewController()
             infoVC.tabBarItem = UITabBarItem(title: "Информация",
                                              image: UIImage(systemName: "info.circle.fill"),
                                              tag: 1)
             return UINavigationController(rootViewController: infoVC)
         }
-            
-            func createTabBarController() -> UITabBarController {
-                
-                let tabBarController = UITabBarController()
-                UITabBar.appearance().backgroundColor = .navigationColor
-                tabBarController.tabBar.tintColor = .purpleColor
-                tabBarController.viewControllers = [createHabitsViewController(), createInfoViewController()]
-                return tabBarController
-            }
         
+        func createTabBarController() -> UITabBarController {
+            let tabBarController = UITabBarController()
+            UITabBar.appearance().backgroundColor = .navigationColor
+            UITabBar.appearance().scrollEdgeAppearance = UITabBarAppearance()
+            UITabBar.appearance().isTranslucent = true
+            tabBarController.tabBar.tintColor = .purpleColor
+            tabBarController.viewControllers = [createHabitsNC(), createInfoNC()]
+            
+            return tabBarController
+        }
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
