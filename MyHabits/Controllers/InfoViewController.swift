@@ -11,6 +11,21 @@ class InfoViewController: UIViewController {
     
     private lazy var appearance = UINavigationBarAppearance()
     
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    
+    
     private func stupView() {
         
         view.backgroundColor = .white
