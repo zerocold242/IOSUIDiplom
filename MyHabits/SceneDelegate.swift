@@ -16,12 +16,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
+  
+        
         func createHabitsViewController() -> UINavigationController {
             let habitsVC = HabitsViewController()
             habitsVC.tabBarItem = UITabBarItem(title: "Привычки",
                                                          image: UIImage(named: "Shape-2"),
                                                          tag: 0)
-            //habitsVC.navigationBar.prefersLargeTitles = true
             return UINavigationController(rootViewController: habitsVC)
         }
         
@@ -36,7 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             func createTabBarController() -> UITabBarController {
                 
                 let tabBarController = UITabBarController()
-                //UITabBar.appearance().backgroundColor = .systemGray5
+                UITabBar.appearance().backgroundColor = .navigationColor
                 tabBarController.tabBar.tintColor = .purpleColor
                 tabBarController.viewControllers = [createHabitsViewController(), createInfoViewController()]
                 return tabBarController

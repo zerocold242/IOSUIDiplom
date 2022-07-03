@@ -8,11 +8,27 @@
 import UIKit
 
 class InfoViewController: UIViewController {
+    
+    private lazy var appearance = UINavigationBarAppearance()
+    
+    private func setupNavigationBar() {
+        
+        navigationItem.title = "Информация"
+        //navigationController?.navigationBar.prefersLargeTitles = true
+        //navigationController?.navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.isTranslucent = true
+        appearance.backgroundColor = .navigationColor
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        setupNavigationBar()
+        
 
     }
 }

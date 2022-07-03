@@ -8,11 +8,24 @@
 import UIKit
 
 class HabitsViewController: UIViewController {
+    
+    private lazy var appearance = UINavigationBarAppearance()
+    
+    private func setupNavigationBar() {
+        
+        navigationItem.title = "Сегодня"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.isTranslucent = true
+        appearance.backgroundColor = .navigationColor
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        setupNavigationBar()
+        view.backgroundColor = .systemBackground
 
     }
 }
