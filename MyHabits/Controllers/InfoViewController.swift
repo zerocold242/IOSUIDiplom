@@ -11,11 +11,6 @@ class InfoViewController: UIViewController {
     
     private lazy var appearance = UINavigationBarAppearance()
     
-    private func stupView() {
-        
-        view.backgroundColor = .white
-    }
-    
     private func setupNavigationBar() {
         
         navigationItem.title = "Информация"
@@ -27,7 +22,7 @@ class InfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = .white
         setupNavigationBar()
-        stupView()
     }
 }
