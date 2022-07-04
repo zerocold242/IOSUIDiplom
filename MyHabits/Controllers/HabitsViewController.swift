@@ -25,10 +25,16 @@ class HabitsViewController: UIViewController {
         appearance.backgroundColor = .navigationColor
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addHabit))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openHabit))
     }
     
-    @objc func addHabit() {}
+    @objc func openHabit() {
+        
+        let habitVC = HabitViewController(habit: nil)
+        let habitNavigationVC = UINavigationController(rootViewController: habitVC)
+        habitNavigationVC.modalPresentationStyle = .fullScreen
+        present(habitNavigationVC, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
