@@ -25,6 +25,15 @@ class HabitViewController: UIViewController {
         return view
     }()
     
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "НАЗВАНИЕ"
+        label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     init (habit: Habit?) {
         self.habit = habit
         super.init(nibName: nil, bundle: nil)
@@ -72,7 +81,10 @@ class HabitViewController: UIViewController {
         }
     }
     
-    private func setupConstraints() {
+    private func setupHabitScrollView() {
+        
+        scrollView.addSubview(contentView)
+        contentView.addSubview(titleLabel)
         
         NSLayoutConstraint.activate ([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -85,6 +97,9 @@ class HabitViewController: UIViewController {
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 21),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
         ])
     }
     
@@ -96,10 +111,8 @@ class HabitViewController: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        
         view.backgroundColor = .white
         setupNavigationBar()
-        setupConstraints()
+        setupHabitScrollView()
     }
 }
