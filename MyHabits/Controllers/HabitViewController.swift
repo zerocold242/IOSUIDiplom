@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HabitViewController: UIViewController {
+class HabitViewController: UIViewController, UITextFieldDelegate {
     
     private lazy var appearance = UINavigationBarAppearance()
     
@@ -33,6 +33,26 @@ class HabitViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    private lazy var habitTextField: UITextField = {
+        let textField = UITextField()
+        //textField.becomeFirstResponder()
+        textField.delegate = self
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
+        textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        textField.textColor = .black
+        textField.autocorrectionType = UITextAutocorrectionType.no
+        textField.keyboardType = UIKeyboardType.default
+        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+        textField.clipsToBounds = true
+        textField.returnKeyType = UIReturnKeyType.done
+        textField.isEnabled = true
+        textField.isUserInteractionEnabled = true
+        return textField
+    }()
+    
+    
     
     init (habit: Habit?) {
         self.habit = habit
@@ -82,9 +102,12 @@ class HabitViewController: UIViewController {
     }
     
     private func setupHabitScrollView() {
-        
+        view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(titleLabel)
+        contentView.addSubview(habitTextField)
+        scrollView.keyboardDismissMode = .onDrag
+        scrollView.addSubview(contentView)
         
         NSLayoutConstraint.activate ([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -100,19 +123,66 @@ class HabitViewController: UIViewController {
             
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 21),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            titleLabel.heightAnchor.constraint(equalToConstant: 18),
+            
+            habitTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 7),
+            habitTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            habitTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            habitTextField.heightAnchor.constraint(equalToConstant: 22),
+            
         ])
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func gesture() {
+        let gesture = UITapGestureRecognizer()
+        gesture.cancelsTouchesInView = false
+        gesture.addTarget(self, action: #selector(self.gestureAction))
+        self.view.addGestureRecognizer(gesture)
+    }
+    
+    @objc private func gestureAction() {
+        self.view.endEditing(true)
+    }
+    
     
     @objc private func saveButton() {}
     
     @objc private func cancelButton() {}
     
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            scrollView.contentInset.bottom = keyboardSize.height
+            scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        }
+    }
+  
+    @objc func keyboardWillHide(notification: NSNotification) {
+        scrollView.contentInset.bottom = .zero
+        scrollView.verticalScrollIndicatorInsets = .zero
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.addSubview(scrollView)
+
         view.backgroundColor = .white
+        view.addSubview(scrollView)
         setupNavigationBar()
         setupHabitScrollView()
+        //habitTextField.delegate = self
+        gesture()
+        
     }
 }
+
