@@ -52,6 +52,15 @@ class HabitViewController: UIViewController, UITextFieldDelegate {
         return textField
     }()
     
+    private lazy var colorTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "ЦВЕТ"
+        label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        label.textColor = .black
+        return label
+    }()
+    
     
     
     init (habit: Habit?) {
@@ -106,8 +115,8 @@ class HabitViewController: UIViewController, UITextFieldDelegate {
         scrollView.addSubview(contentView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(habitTextField)
+        contentView.addSubview(colorTitleLabel)
         scrollView.keyboardDismissMode = .onDrag
-        scrollView.addSubview(contentView)
         
         NSLayoutConstraint.activate ([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -129,6 +138,9 @@ class HabitViewController: UIViewController, UITextFieldDelegate {
             habitTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             habitTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             habitTextField.heightAnchor.constraint(equalToConstant: 22),
+            
+            colorTitleLabel.topAnchor.constraint(equalTo: habitTextField.bottomAnchor, constant: 15),
+            colorTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             
         ])
     }
