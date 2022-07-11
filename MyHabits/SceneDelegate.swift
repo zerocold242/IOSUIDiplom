@@ -16,6 +16,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
+        self.window = UIWindow(windowScene: windowScene)
+        window?.windowScene = windowScene
+        window?.rootViewController = createTabBarController()
+        window?.makeKeyAndVisible()
+        
         
         func createHabitsNC() -> UINavigationController {
             let habitsVC = HabitsViewController()
@@ -45,11 +50,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             return tabBarController
         }
-        
-        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-        window?.windowScene = windowScene
-        window?.rootViewController = createTabBarController()
-        window?.makeKeyAndVisible()
     }
 }
 
