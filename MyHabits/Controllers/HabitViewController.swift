@@ -40,7 +40,7 @@ class HabitViewController: UIViewController {
         textField.delegate = self
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
-        textField.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        textField.font = .body
         textField.textColor = .black
         textField.autocorrectionType = UITextAutocorrectionType.no
         textField.keyboardType = UIKeyboardType.default
@@ -56,7 +56,7 @@ class HabitViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "ЦВЕТ"
-        label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
+        label.font = .footnoteBold
         label.textColor = .black
         return label
     }()
