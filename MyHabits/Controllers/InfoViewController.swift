@@ -9,8 +9,6 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
-    private lazy var appearance = UINavigationBarAppearance()
-    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,7 +26,7 @@ class InfoViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Привычка за 21 день"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        label.font = .title3
         label.textColor = .black
         return label
     }()
@@ -37,7 +35,7 @@ class InfoViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        label.font = .body
         label.textColor = .black
         label.text = """
 
@@ -62,8 +60,6 @@ class InfoViewController: UIViewController {
         
         navigationItem.title = "Информация"
         navigationController?.navigationBar.isTranslucent = true
-        appearance.backgroundColor = .navigationColor
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     private func setupConstraints() {
