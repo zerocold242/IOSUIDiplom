@@ -57,11 +57,20 @@ class HabitViewController: UIViewController {
         return button
     }()
     
-    private lazy var timeTitleLabel: UILabel = {
+    private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "ВРЕМЯ"
         label.font = .footnoteBold
+        label.textColor = .black
+        return label
+    }()
+    
+    private lazy var everyDayLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Каждый день в "
+        label.font = .body
         label.textColor = .black
         return label
     }()
@@ -119,7 +128,8 @@ class HabitViewController: UIViewController {
         view.addSubview(habitTextField)
         view.addSubview(colorTitleLabel)
         view.addSubview(colorButton)
-        view.addSubview(timeTitleLabel)
+        view.addSubview(timeLabel)
+        view.addSubview(everyDayLabel)
         
         NSLayoutConstraint.activate ([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 21),
@@ -141,8 +151,11 @@ class HabitViewController: UIViewController {
             colorButton.heightAnchor.constraint(equalToConstant: 30),
             colorButton.widthAnchor.constraint(equalTo: colorButton.heightAnchor),
             
-            timeTitleLabel.topAnchor.constraint(equalTo: colorButton.bottomAnchor, constant: 15),
-            timeTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            timeLabel.topAnchor.constraint(equalTo: colorButton.bottomAnchor, constant: 15),
+            timeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            
+            everyDayLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 7),
+            everyDayLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
         ])
     }
     
@@ -184,7 +197,7 @@ class HabitViewController: UIViewController {
         
         setupNavigationBar()
         setupView()
-        habitTextField.delegate = self
+        //habitTextField.delegate = self
         gesture()
         delegat()
     }
