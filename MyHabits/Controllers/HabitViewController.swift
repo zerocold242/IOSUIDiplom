@@ -75,6 +75,23 @@ class HabitViewController: UIViewController {
         return label
     }()
     
+    private lazy var timePickerLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .purpleColor
+        label.font = .body
+        return label
+    }()
+    
+    private lazy var timePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.datePickerMode = .time
+        picker.preferredDatePickerStyle = .wheels
+        picker.addTarget(self, action: #selector(setTime), for: .valueChanged)
+        return picker
+    }()
+    
     init (habit: Habit?) {
         self.habit = habit
         super.init(nibName: nil, bundle: nil)
@@ -130,6 +147,8 @@ class HabitViewController: UIViewController {
         view.addSubview(colorButton)
         view.addSubview(timeLabel)
         view.addSubview(everyDayLabel)
+        view.addSubview(timePickerLabel)
+        view.addSubview(timePicker)
         
         NSLayoutConstraint.activate ([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 21),
@@ -156,6 +175,13 @@ class HabitViewController: UIViewController {
             
             everyDayLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 7),
             everyDayLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            
+            timePickerLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 7),
+                timePickerLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+                
+                timePicker.topAnchor.constraint(equalTo: timePickerLabel.bottomAnchor, constant: 15),
+                timePicker.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                timePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
     
@@ -190,6 +216,8 @@ class HabitViewController: UIViewController {
         self.present(colorPicker, animated: true, completion: nil)
     }
     
+    @objc private func setTime() {}
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -197,7 +225,6 @@ class HabitViewController: UIViewController {
         
         setupNavigationBar()
         setupView()
-        //habitTextField.delegate = self
         gesture()
         delegat()
     }
