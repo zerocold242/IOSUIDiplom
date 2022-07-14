@@ -177,7 +177,7 @@ class HabitViewController: UIViewController {
             everyDayLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             
             timePickerLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 7),
-                timePickerLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            timePickerLabel.leadingAnchor.constraint(equalTo: everyDayLabel.trailingAnchor),
                 
                 timePicker.topAnchor.constraint(equalTo: timePickerLabel.bottomAnchor, constant: 15),
                 timePicker.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -186,7 +186,6 @@ class HabitViewController: UIViewController {
     }
     
     private func delegat() {
-        
         if let habit = habit {
             habitTextField.text = habit.name
             colorButton.backgroundColor = habit.color
@@ -209,14 +208,20 @@ class HabitViewController: UIViewController {
     @objc private func cancelButton() {}
     
     @objc private func selectColor() {
-        
         let colorPicker = UIColorPickerViewController()
         colorPicker.delegate = self
         colorPicker.selectedColor = self.colorButton.backgroundColor ?? .white
         self.present(colorPicker, animated: true, completion: nil)
     }
     
-    @objc private func setTime() {}
+    @objc private func setTime() {
+        let dateFormater = DateFormatter()
+        dateFormater.dateStyle = .none
+        dateFormater.timeStyle = .short
+        timePickerLabel.text = dateFormater.string(from: timePicker.date)
+    }
+    
+    @objc private func deleteHabitButton() {}
     
     override func viewDidLoad() {
         super.viewDidLoad()
