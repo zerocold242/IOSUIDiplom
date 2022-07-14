@@ -13,18 +13,6 @@ class HabitViewController: UIViewController {
     
     private var habit: Habit?
     
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        return scrollView
-    }()
-    
-    private lazy var contentView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "НАЗВАНИЕ"
@@ -36,7 +24,6 @@ class HabitViewController: UIViewController {
     
     private lazy var habitTextField: UITextField = {
         let textField = UITextField()
-        //textField.becomeFirstResponder()
         textField.delegate = self
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
@@ -69,8 +56,6 @@ class HabitViewController: UIViewController {
         button.addTarget(self, action: #selector(selectColor), for: .touchUpInside)
         return button
     }()
-    
-    
     
     init (habit: Habit?) {
         self.habit = habit
@@ -119,41 +104,30 @@ class HabitViewController: UIViewController {
         }
     }
     
-    private func setupHabitScrollView() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(habitTextField)
-        contentView.addSubview(colorTitleLabel)
-        contentView.addSubview(colorButton)
-        scrollView.keyboardDismissMode = .onDrag
+    private func setupView() {
+        
+        view.addSubview(titleLabel)
+        view.addSubview(habitTextField)
+        view.addSubview(colorTitleLabel)
+        view.addSubview(colorButton)
         
         NSLayoutConstraint.activate ([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 21),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 21),
+            titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -285),
             titleLabel.heightAnchor.constraint(equalToConstant: 18),
             
             habitTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 7),
-            habitTextField.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            habitTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            habitTextField.heightAnchor.constraint(equalToConstant: 22),
+            habitTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            habitTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -65),
+            // habitTextField.heightAnchor.constraint(equalToConstant: 22),
             
             colorTitleLabel.topAnchor.constraint(equalTo: habitTextField.bottomAnchor, constant: 15),
-            colorTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            colorTitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            colorTitleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant:  -323),
             
             colorButton.topAnchor.constraint(equalTo: colorTitleLabel.bottomAnchor, constant: 7),
-            colorButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            colorButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             colorButton.heightAnchor.constraint(equalToConstant: 30),
             colorButton.widthAnchor.constraint(equalTo: colorButton.heightAnchor),
         ])
@@ -166,23 +140,10 @@ class HabitViewController: UIViewController {
             colorButton.backgroundColor = habit.color
         }
     }
-   
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
     
     func gesture() {
         let gesture = UITapGestureRecognizer()
-    gesture.cancelsTouchesInView = false
+        gesture.cancelsTouchesInView = false
         gesture.addTarget(self, action: #selector(self.gestureAction))
         self.view.addGestureRecognizer(gesture)
     }
@@ -190,7 +151,6 @@ class HabitViewController: UIViewController {
     @objc private func gestureAction() {
         self.view.endEditing(true)
     }
-    
     
     @objc private func saveButton() {}
     
@@ -204,34 +164,18 @@ class HabitViewController: UIViewController {
         self.present(colorPicker, animated: true, completion: nil)
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            scrollView.contentInset.bottom = keyboardSize.height
-            scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-        }
-    }
-  
-    @objc func keyboardWillHide(notification: NSNotification) {
-        scrollView.contentInset.bottom = .zero
-        scrollView.verticalScrollIndicatorInsets = .zero
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .white
-        view.addSubview(scrollView)
-        setupNavigationBar()
-        setupHabitScrollView()
-        setupHideKeyboardOnTap()
-        habitTextField.delegate = self
         
-        //gesture()
+        view.backgroundColor = .white
+        
+        setupNavigationBar()
+        setupView()
+        habitTextField.delegate = self
+        gesture()
         delegat()
     }
 }
-
-
 
 extension HabitViewController: UIColorPickerViewControllerDelegate {
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
@@ -244,17 +188,6 @@ extension HabitViewController: UIColorPickerViewControllerDelegate {
 }
 
 extension HabitViewController: UITextFieldDelegate {
-    //Скрытие keyboard при нажатии за пределами TextField
-    func setupHideKeyboardOnTap() {
-        view.addGestureRecognizer(self.endEditingRecognizer())
-        navigationController?.navigationBar.addGestureRecognizer(self.endEditingRecognizer())
-    }
-    
-    private func endEditingRecognizer() -> UIGestureRecognizer {
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(self.view.endEditing(_:)))
-        tap.cancelsTouchesInView = false
-        return tap
-    }
     
     //Скрытие keyboard при нажатии клавиши Return
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
