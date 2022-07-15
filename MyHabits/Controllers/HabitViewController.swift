@@ -94,6 +94,7 @@ class HabitViewController: UIViewController {
     
     private lazy var deleteButton: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Удалить привычку", for: .normal)
         button.setTitleColor(.systemRed, for: .normal)
         button.titleLabel?.font = .body
@@ -225,9 +226,38 @@ class HabitViewController: UIViewController {
         self.view.endEditing(true)
     }
     
-    @objc private func saveButton() {}
+    @objc private func saveButton() {
+        guard let text = habitTextField.text, !text.isEmpty else {
+            let alertVC = UIAlertController(title: "Так не получится!", message: "Введи название привычки", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Ok", style: .destructive, handler: nil)
+            alertVC.addAction(action)
+            self.present(alertVC, animated: true, completion: nil)
+            return
+        }
+        guard let color = colorButton.backgroundColor else {
+            return
+        }
+        
+        if let habit = habit {
+            guard let index = HabitsStore.shared.habits.firstIndex(of: habit) else {
+                return
+            }
+            habit.name = text
+            habit.color = color
+            habit.date = timePicker.date
+            HabitsStore.shared.habits[index] = habit
+            dismiss(animated: true, completion: nil)
+        } else {
+            let habit = Habit(name: text, date: timePicker.date, color: color)
+            let store = HabitsStore.shared
+            store.habits.append(habit)
+            dismiss(animated: true, completion: nil)
+        }
+    }
     
-    @objc private func cancelButton() {}
+    @objc private func cancelButton() {
+        dismiss(animated: true, completion: nil)
+    }
     
     @objc private func selectColor() {
         let colorPicker = UIColorPickerViewController()
