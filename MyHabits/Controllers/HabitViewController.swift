@@ -92,6 +92,18 @@ class HabitViewController: UIViewController {
         return picker
     }()
     
+    private lazy var deleteButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Удалить привычку", for: .normal)
+        button.setTitleColor(.systemRed, for: .normal)
+        button.titleLabel?.font = .body
+        button.addTarget(self, action: #selector(deleteHabitButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    var onRemove: (() -> Void)?
+    
     init (habit: Habit?) {
         self.habit = habit
         super.init(nibName: nil, bundle: nil)
@@ -149,6 +161,7 @@ class HabitViewController: UIViewController {
         view.addSubview(everyDayLabel)
         view.addSubview(timePickerLabel)
         view.addSubview(timePicker)
+        view.addSubview(deleteButton)
         
         NSLayoutConstraint.activate ([
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 21),
@@ -181,8 +194,17 @@ class HabitViewController: UIViewController {
                 
                 timePicker.topAnchor.constraint(equalTo: timePickerLabel.bottomAnchor, constant: 15),
                 timePicker.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                timePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+                timePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            deleteButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -52),
+            deleteButton.heightAnchor.constraint(equalToConstant: 22),
+            deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+    
+    func deleteHabit() {
+        HabitsStore.shared.habits.removeAll{$0 == self.habit}
+        dismiss(animated: false, completion: onRemove)
     }
     
     private func delegat() {
@@ -192,7 +214,7 @@ class HabitViewController: UIViewController {
         }
     }
     
-    func gesture() {
+   private func gesture() {
         let gesture = UITapGestureRecognizer()
         gesture.cancelsTouchesInView = false
         gesture.addTarget(self, action: #selector(self.gestureAction))
@@ -221,7 +243,18 @@ class HabitViewController: UIViewController {
         timePickerLabel.text = dateFormater.string(from: timePicker.date)
     }
     
-    @objc private func deleteHabitButton() {}
+    @objc private func deleteHabitButton() {
+        if let habit = habit {
+            let alertVC = UIAlertController(title: "Удалить привычку", message: "Вы действительно хотите удалить привычку \"\(habit.name)\"?", preferredStyle: UIAlertController.Style.alert)
+            let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+            let delete = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+                self?.deleteHabit()
+            }
+            alertVC.addAction(cancel)
+            alertVC.addAction(delete)
+            self.present(alertVC, animated: true, completion: nil)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
