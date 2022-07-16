@@ -9,10 +9,6 @@ import UIKit
 
 class HabitViewController: UIViewController {
     
-    private lazy var appearance = UINavigationBarAppearance()
-    
-    private var habit: Habit?
-    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "НАЗВАНИЕ"
@@ -104,6 +100,10 @@ class HabitViewController: UIViewController {
     }()
     
     var onRemove: (() -> Void)?
+    
+    private lazy var appearance = UINavigationBarAppearance()
+    
+    private var habit: Habit?
     
     init (habit: Habit?) {
         self.habit = habit
