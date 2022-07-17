@@ -192,10 +192,10 @@ class HabitViewController: UIViewController {
             
             timePickerLabel.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 7),
             timePickerLabel.leadingAnchor.constraint(equalTo: everyDayLabel.trailingAnchor),
-                
-                timePicker.topAnchor.constraint(equalTo: timePickerLabel.bottomAnchor, constant: 15),
-                timePicker.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                timePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            timePicker.topAnchor.constraint(equalTo: timePickerLabel.bottomAnchor, constant: 15),
+            timePicker.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            timePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
             deleteButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -52),
             deleteButton.heightAnchor.constraint(equalToConstant: 22),
@@ -215,7 +215,7 @@ class HabitViewController: UIViewController {
         }
     }
     
-   private func gesture() {
+    private func gesture() {
         let gesture = UITapGestureRecognizer()
         gesture.cancelsTouchesInView = false
         gesture.addTarget(self, action: #selector(self.gestureAction))
@@ -274,16 +274,6 @@ class HabitViewController: UIViewController {
     }
     
     @objc private func deleteHabitButton() {
-        if let habit = habit {
-            let alertVC = UIAlertController(title: "Удалить привычку", message: "Вы действительно хотите удалить привычку \"\(habit.name)\"?", preferredStyle: UIAlertController.Style.alert)
-            let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
-            let delete = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
-                self?.deleteHabit()
-            }
-            alertVC.addAction(cancel)
-            alertVC.addAction(delete)
-            self.present(alertVC, animated: true, completion: nil)
-        }
     }
     
     override func viewDidLoad() {
@@ -310,7 +300,6 @@ extension HabitViewController: UIColorPickerViewControllerDelegate {
 
 extension HabitViewController: UITextFieldDelegate {
     
-    //Скрытие keyboard при нажатии клавиши Return
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         habitTextField.resignFirstResponder()
         return true
