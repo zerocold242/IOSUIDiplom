@@ -9,6 +9,7 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
+
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +56,7 @@ class InfoViewController: UIViewController {
 """
         return label
     }()
-    
+
     private func setupNavigationBar() {
         
         navigationItem.title = "Информация"
