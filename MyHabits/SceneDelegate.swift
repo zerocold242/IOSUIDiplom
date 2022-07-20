@@ -3,7 +3,7 @@
 //  MyHabits
 //
 //  Created by Aleksey Lexx on 02.07.2022.
-//
+
 
 import UIKit
 
@@ -41,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UITabBar.appearance().isTranslucent = true
         tabBarController.tabBar.tintColor = .purpleColor
         tabBarController.viewControllers = [
-            self.createNavigationController(for: HabitsViewController(), with: TabBarModel(title: "Привычки",                                                                                                                    image: UIImage(named: "Shape-2"),
+            self.createNavigationController(for: HabitsViewController(), with: TabBarModel(title: "Привычки", image: UIImage(named: "Shape-2"),
                                                                                            tag: 0)),
             self.createNavigationController(for: InfoViewController(), with: TabBarModel(title: "Информация",
                                                                                          image: UIImage(systemName: "info.circle.fill"),
