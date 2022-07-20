@@ -14,6 +14,10 @@ protocol CustomIdentifier: AnyObject {
 
 class ProgressCollectionViewCell: UICollectionViewCell {
     
+    func refreshProgress() -> Void {
+        }
+
+    
 }
 
 extension ProgressCollectionViewCell: CustomIdentifier {

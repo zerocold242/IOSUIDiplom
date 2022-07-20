@@ -9,6 +9,9 @@ import UIKit
 
 class HabitCollectionViewCell: UICollectionViewCell {
     
+    var habitTrack: (() -> Void)?
+    
+    var habit: Habit?
 }
 
 extension HabitCollectionViewCell: CustomIdentifier {
