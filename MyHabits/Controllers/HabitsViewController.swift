@@ -8,28 +8,28 @@
 import UIKit
 
 class HabitsViewController: UIViewController {
-  
+    
     private lazy var collectionView: UICollectionView = {
-            let layout = UICollectionViewFlowLayout()
-            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-            collectionView.translatesAutoresizingMaskIntoConstraints = false
-            return collectionView
-        }()
-
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(ProgressCollectionViewCell.self, forCellWithReuseIdentifier: ProgressCollectionViewCell.identifier)
+        collectionView.register(HabitCollectionViewCell.self, forCellWithReuseIdentifier: HabitCollectionViewCell.identifier)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
     
     private func setupView() {
         view.backgroundColor = .systemBackground
         view.addSubview(collectionView)
-         collectionView.backgroundColor = .lightGrayColor
-         
-         NSLayoutConstraint.activate([
-             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-         ])
-
+        collectionView.backgroundColor = .lightGrayColor
         
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
     
     private func setupNavigationBar() {
@@ -55,4 +55,10 @@ class HabitsViewController: UIViewController {
         setupNavigationBar()
         setupView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        collectionView.reloadData()
+    }
+    
 }
