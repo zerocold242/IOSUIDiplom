@@ -22,6 +22,7 @@ extension UIFont {
     static let headLine = UIFont.systemFont(ofSize: 17, weight: .semibold)
     static let body = UIFont.systemFont(ofSize: 17, weight: .regular)
     static let footnoteBold = UIFont.systemFont(ofSize: 13, weight: .semibold)
+    static let footnoteStatus = UIFont.systemFont(ofSize: 13, weight: .semibold)
     static let footnote = UIFont.systemFont(ofSize: 13, weight: .regular)
     static let caption = UIFont.systemFont(ofSize: 12, weight: .regular)
 }
