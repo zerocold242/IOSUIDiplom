@@ -23,6 +23,15 @@ class ProgressCollectionViewCell: UICollectionViewCell {
           return label
       }()
     
+    private lazy var percentLabel: UILabel = {
+          let label = UILabel()
+          label.translatesAutoresizingMaskIntoConstraints = false
+          label.font = .footnoteStatus
+          label.textColor = .systemGray
+          return label
+      }()
+
+    
     override init(frame: CGRect) {
            super.init(frame: frame)
            contentView.layer.cornerRadius = 10
@@ -42,6 +51,10 @@ class ProgressCollectionViewCell: UICollectionViewCell {
           NSLayoutConstraint.activate([
               titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
               titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+              
+              percentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+              percentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
+
           ])
       }
 
