@@ -33,6 +33,20 @@ class HabitCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private lazy var colorButton: UIButton = {
+            let button = UIButton()
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            button.backgroundColor = .white
+            button.tintColor = .white
+            button.layer.cornerRadius = 19
+            button.layer.borderWidth = 3
+            button.addTarget(self, action: #selector(onColorButton), for: .touchUpInside)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }()
+
+    
     var habitTrack: (() -> Void)?
     
     var habit: Habit?
@@ -41,6 +55,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(habitLabel)
         contentView.addSubview(timeLabel)
         contentView.addSubview(counterLabel)
+        contentView.addSubview(colorButton)
         
         NSLayoutConstraint.activate([
             habitLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
@@ -55,6 +70,15 @@ class HabitCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    @objc func onColorButton() {
+            if habit?.isAlreadyTakenToday == false {
+                colorButton.backgroundColor = habit?.color
+                HabitsStore.shared.track(habit!)
+                counterLabel.text = "Счётчик: \(habit!.trackDates.count)"
+                habitTrack?()
+            }
+        }
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
