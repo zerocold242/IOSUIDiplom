@@ -25,7 +25,13 @@ class HabitCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    
+    private lazy var counterLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .footnote
+        label.textColor = .systemGray
+        return label
+    }()
     
     var habitTrack: (() -> Void)?
     
@@ -34,6 +40,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
     private func setupCell() {
         contentView.addSubview(habitLabel)
         contentView.addSubview(timeLabel)
+        contentView.addSubview(counterLabel)
         
         NSLayoutConstraint.activate([
             habitLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
@@ -43,6 +50,8 @@ class HabitCollectionViewCell: UICollectionViewCell {
             timeLabel.topAnchor.constraint(equalTo: habitLabel.bottomAnchor, constant: 4),
             timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             
+            counterLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            counterLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
         ])
     }
     
