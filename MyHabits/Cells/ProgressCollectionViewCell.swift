@@ -39,8 +39,6 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         return progressView
     }()
     
-    
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.layer.cornerRadius = 10
@@ -53,9 +51,10 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     private func setupViews() {
         contentView.addSubview(titleLabel)
+        contentView.addSubview(percentLabel)
+        contentView.addSubview(progressView)
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
@@ -71,11 +70,10 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    
     func refreshProgress() -> Void {
+        percentLabel.text = "\(Int(HabitsStore.shared.todayProgress * 100))%"
+        progressView.setProgress(HabitsStore.shared.todayProgress, animated: true)
     }
-    
-    
 }
 
 extension ProgressCollectionViewCell: CustomIdentifier {
