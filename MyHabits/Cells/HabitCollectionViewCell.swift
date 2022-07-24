@@ -34,18 +34,18 @@ class HabitCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var colorButton: UIButton = {
-            let button = UIButton()
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.setImage(UIImage(systemName: "checkmark"), for: .normal)
-            button.backgroundColor = .white
-            button.tintColor = .white
-            button.layer.cornerRadius = 19
-            button.layer.borderWidth = 3
-            button.addTarget(self, action: #selector(onColorButton), for: .touchUpInside)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            return button
-        }()
-
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "checkmark"), for: .normal)
+        button.backgroundColor = .white
+        button.tintColor = .white
+        button.layer.cornerRadius = 19
+        button.layer.borderWidth = 3
+        button.addTarget(self, action: #selector(onColorButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     
     var habitTrack: (() -> Void)?
     
@@ -67,18 +67,23 @@ class HabitCollectionViewCell: UICollectionViewCell {
             
             counterLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             counterLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+            
+            colorButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            colorButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
+            colorButton.heightAnchor.constraint(equalToConstant: 38),
+            colorButton.widthAnchor.constraint(equalTo: colorButton.heightAnchor)
         ])
     }
     
     @objc func onColorButton() {
-            if habit?.isAlreadyTakenToday == false {
-                colorButton.backgroundColor = habit?.color
-                HabitsStore.shared.track(habit!)
-                counterLabel.text = "Счётчик: \(habit!.trackDates.count)"
-                habitTrack?()
-            }
+        if habit?.isAlreadyTakenToday == false {
+            colorButton.backgroundColor = habit?.color
+            HabitsStore.shared.track(habit!)
+            counterLabel.text = "Счётчик: \(habit!.trackDates.count)"
+            habitTrack?()
         }
-
+    }
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
