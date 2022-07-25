@@ -20,10 +20,10 @@ class HabitsViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.isTranslucent = true
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openHabit))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addHabit))
     }
     
-    @objc func openHabit() {
+    @objc func addHabit() {
         
         let habitVC = HabitViewController(habit: nil)
         let habitNavigationVC = UINavigationController(rootViewController: habitVC)
