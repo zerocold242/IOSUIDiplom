@@ -11,7 +11,6 @@ class HabitsViewController: UIViewController {
     
     private func setupView() {
         view.backgroundColor = .systemBackground
-        
     }
     
     private func setupNavigationBar() {
