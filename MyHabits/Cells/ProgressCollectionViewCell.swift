@@ -11,7 +11,6 @@ protocol CustomIdentifier: AnyObject {
     static var identifier: String { get }
 }
 
-
 class ProgressCollectionViewCell: UICollectionViewCell {
     
     private lazy var titleLabel: UILabel = {

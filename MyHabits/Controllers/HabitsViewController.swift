@@ -18,7 +18,6 @@ class HabitsViewController: UIViewController {
         return collectionView
     }()
     
-    
     private func setupView() {
         view.backgroundColor = .systemBackground
         view.addSubview(collectionView)
@@ -59,6 +58,9 @@ class HabitsViewController: UIViewController {
         
         setupNavigationBar()
         setupView()
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
     }
 }
 
@@ -87,7 +89,7 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
             return cell
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt IndexPath: IndexPath) -> CGSize {
         if IndexPath.section == 0 {
             return CGSize(width: view.bounds.width - 32, height: 60)
