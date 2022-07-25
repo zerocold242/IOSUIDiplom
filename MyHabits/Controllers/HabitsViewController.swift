@@ -22,7 +22,13 @@ class HabitsViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addHabit))
     }
     
-    @objc func addHabit() {}
+    @objc func addHabit() {
+        
+        let habitVC = HabitViewController(habit: nil)
+        let habitNavigationVC = UINavigationController(rootViewController: habitVC)
+        habitNavigationVC.modalPresentationStyle = .fullScreen
+        present(habitNavigationVC, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
