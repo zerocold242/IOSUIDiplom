@@ -9,7 +9,6 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
-
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
