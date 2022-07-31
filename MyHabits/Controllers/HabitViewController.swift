@@ -99,8 +99,6 @@ class HabitViewController: UIViewController {
         return button
     }()
     
-    var onRemove: (() -> Void)?
-    
     private lazy var appearance = UINavigationBarAppearance()
     
     private var habit: Habit?
@@ -173,7 +171,6 @@ class HabitViewController: UIViewController {
             habitTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 7),
             habitTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             habitTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -65),
-            // habitTextField.heightAnchor.constraint(equalToConstant: 22),
             
             colorTitleLabel.topAnchor.constraint(equalTo: habitTextField.bottomAnchor, constant: 15),
             colorTitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
@@ -201,11 +198,6 @@ class HabitViewController: UIViewController {
             deleteButton.heightAnchor.constraint(equalToConstant: 22),
             deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-    }
-    
-    func deleteHabit() {
-        HabitsStore.shared.habits.removeAll{$0 == self.habit}
-        dismiss(animated: false, completion: onRemove)
     }
     
     private func delegat() {
