@@ -11,6 +11,9 @@ class HabitDetailsViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "detailsCell")
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -35,8 +38,22 @@ class HabitDetailsViewController: UIViewController {
     }
 }
 
-extension HabitDetailsViewController: CustomIdentifier {
-    static var identifier: String {
-        return String(describing: self)
+extension HabitDetailsViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        HabitsStore.shared.dates.count
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell", for: indexPath)
+        
+        return cell
+    }
+    
 }
+
+//extension HabitDetailsViewController: CustomIdentifier {
+//    static var identifier: String {
+//        return String(describing: self)
+//    }
+//}
