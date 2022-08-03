@@ -21,7 +21,7 @@ class HabitDetailsViewController: UIViewController {
     private lazy var header: UILabel = {
         let header = UILabel()
         header.translatesAutoresizingMaskIntoConstraints = false
-        header.backgroundColor = .systemGray
+        header.textColor = .systemGray
         header.font = .footnote
         header.text = "АКТИВНОСТЬ"
         return header
@@ -44,21 +44,20 @@ class HabitDetailsViewController: UIViewController {
         tableView.addSubview(header)
         
         NSLayoutConstraint.activate([
-        tableView.topAnchor.constraint(equalTo: view.topAnchor),
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        
-        header.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 22),
-        header.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 16)
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            header.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 22),
+            header.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 16)
         ])
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
-
     }
 }
 
@@ -82,5 +81,5 @@ extension HabitDetailsViewController: UITableViewDataSource, UITableViewDelegate
         return 47
     }
 }
-    
+
 

@@ -90,6 +90,13 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            let habitDetailsVC = HabitDetailsViewController(habit: HabitsStore.shared.habits[indexPath.item])
+            navigationController?.pushViewController(habitDetailsVC, animated: true)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt IndexPath: IndexPath) -> CGSize {
         if IndexPath.section == 0 {
             return CGSize(width: view.bounds.width - 32, height: 60)
