@@ -18,6 +18,15 @@ class HabitDetailsViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var header: UILabel = {
+        let header = UILabel()
+        header.translatesAutoresizingMaskIntoConstraints = false
+        header.backgroundColor = .systemGray
+        header.font = .footnote
+        header.text = "АКТИВНОСТЬ"
+        return header
+    }()
+    
     private var habit: Habit
     
     init (habit: Habit) {
@@ -32,12 +41,16 @@ class HabitDetailsViewController: UIViewController {
     private func setupView() {
         view.addSubview(tableView)
         tableView.backgroundColor = .lightGrayColor
+        tableView.addSubview(header)
         
         NSLayoutConstraint.activate([
         tableView.topAnchor.constraint(equalTo: view.topAnchor),
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        
+        header.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 22),
+        header.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 16)
         ])
     }
 
