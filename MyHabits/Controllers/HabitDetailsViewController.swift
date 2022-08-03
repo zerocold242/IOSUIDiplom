@@ -18,6 +18,17 @@ class HabitDetailsViewController: UIViewController {
         return tableView
     }()
     
+    private var habit: Habit
+    
+    init (habit: Habit) {
+        self.habit = habit
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func setupView() {
         view.addSubview(tableView)
         tableView.backgroundColor = .lightGrayColor
