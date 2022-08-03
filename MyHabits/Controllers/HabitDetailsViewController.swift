@@ -74,10 +74,13 @@ extension HabitDetailsViewController: UITableViewDataSource, UITableViewDelegate
         return cell
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return header
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 47
+    }
 }
+    
 
-//extension HabitDetailsViewController: CustomIdentifier {
-//    static var identifier: String {
-//        return String(describing: self)
-//    }
-//}
