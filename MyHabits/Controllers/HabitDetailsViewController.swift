@@ -38,6 +38,17 @@ class HabitDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setupNavigationBar() {
+        navigationItem.title = "\(habit.name)"
+        navigationItem.largeTitleDisplayMode = .never
+        navigationController?.navigationBar.tintColor = .purpleColor
+        let rightBarButtonItem = UIBarButtonItem(title: "Править",
+                                                 style: .done,
+                                                 target: self,
+                                                 action: #selector(editHabit))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
     private func setupView() {
         view.addSubview(tableView)
         tableView.backgroundColor = .lightGrayColor
@@ -54,10 +65,13 @@ class HabitDetailsViewController: UIViewController {
         ])
     }
     
+    @objc private func editHabit() {}
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
+        setupNavigationBar()
     }
 }
 
@@ -69,7 +83,13 @@ extension HabitDetailsViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "detailsCell", for: indexPath)
-        
+        let habitIndex = abs(indexPath.row - HabitsStore.shared.dates.count + 1)
+        cell.textLabel?.text = HabitsStore.shared.trackDateString(forIndex: habitIndex)
+        let date = HabitsStore.shared.dates[habitIndex]
+        if HabitsStore.shared.habit(habit, isTrackedIn: date) {
+            cell.accessoryType = UITableViewCell.AccessoryType.checkmark
+            cell.tintColor = .purpleColor
+        }
         return cell
     }
     
