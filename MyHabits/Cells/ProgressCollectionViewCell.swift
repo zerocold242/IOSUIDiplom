@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CustomIdentifier: AnyObject {
+protocol CustomIdentifier where Self: UICollectionViewCell {
     static var identifier: String { get }
 }
 
@@ -69,7 +69,7 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    func refreshProgress() -> Void {
+    func refreshProgress() {
         percentLabel.text = "\(Int(HabitsStore.shared.todayProgress * 100))%"
         progressView.setProgress(HabitsStore.shared.todayProgress, animated: true)
     }

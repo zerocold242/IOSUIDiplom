@@ -48,10 +48,10 @@ class HabitsViewController: UIViewController {
         present(habitNavigationVC, animated: true, completion: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        collectionView.reloadData()
-    }
+  //  override func viewWillAppear(_ animated: Bool) {
+  //      super.viewWillAppear(true)
+  //      collectionView.reloadData()
+  //  }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,11 +79,15 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProgressCollectionViewCell.identifier, for: indexPath) as! ProgressCollectionViewCell
+            guard  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProgressCollectionViewCell.identifier, for: indexPath) as? ProgressCollectionViewCell
+            else { return UICollectionViewCell() }
             cell.refreshProgress()
             return cell
+            
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HabitCollectionViewCell.identifier, for: indexPath) as! HabitCollectionViewCell
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HabitCollectionViewCell.identifier, for: indexPath) as? HabitCollectionViewCell
+            else { return UICollectionViewCell() }
             cell.habit = HabitsStore.shared.habits[indexPath.item]
             cell.habitTrack = {collectionView.reloadSections(IndexSet(integer: 0))}
             return cell
