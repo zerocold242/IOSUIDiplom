@@ -89,7 +89,10 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HabitCollectionViewCell.identifier, for: indexPath) as? HabitCollectionViewCell
             else { return UICollectionViewCell() }
             cell.habit = HabitsStore.shared.habits[indexPath.item]
-            cell.habitTrack = {collectionView.reloadSections(IndexSet(integer: 0))}
+            cell.habitTrack = {
+                let progressCollectionViewCell = collectionView.visibleCells.first(where: { $0 is ProgressCollectionViewCell }) as? ProgressCollectionViewCell
+                progressCollectionViewCell?.setProgress()
+            }
             return cell
         }
     }
