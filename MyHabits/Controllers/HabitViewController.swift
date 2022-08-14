@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol HabitViewControllerDelegate: AnyObject {
+    func didSaveNewHabit()
+    func didReloadHabit(for index: Int)
+}
+
 class HabitViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
@@ -100,6 +105,8 @@ class HabitViewController: UIViewController {
     }()
     
     var onRemove: (() -> Void)?
+    
+    weak var delegate: HabitViewControllerDelegate?
     
     private lazy var appearance = UINavigationBarAppearance()
     
@@ -246,12 +253,16 @@ class HabitViewController: UIViewController {
             habit.color = color
             habit.date = timePicker.date
             HabitsStore.shared.habits[index] = habit
-            dismiss(animated: true, completion: nil)
+            dismiss(animated: true) {
+                self.delegate?.didReloadHabit(for: index)
+            }
         } else {
             let habit = Habit(name: text, date: timePicker.date, color: color)
             let store = HabitsStore.shared
             store.habits.append(habit)
-            dismiss(animated: true, completion: nil)
+            dismiss(animated: true){
+                self.delegate?.didSaveNewHabit()
+            }
         }
     }
     

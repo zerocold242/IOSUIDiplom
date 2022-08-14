@@ -43,6 +43,7 @@ class HabitsViewController: UIViewController {
     @objc func addHabit() {
         
         let habitVC = HabitViewController(habit: nil)
+        habitVC.delegate = self
         let habitNavigationVC = UINavigationController(rootViewController: habitVC)
         habitNavigationVC.modalPresentationStyle = .fullScreen
         present(habitNavigationVC, animated: true, completion: nil)
@@ -61,6 +62,17 @@ class HabitsViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
+    }
+}
+
+extension HabitsViewController: HabitViewControllerDelegate {
+    func didReloadHabit(for index: Int) {}
+        
+    func didSaveNewHabit() {
+        self.collectionView.performBatchUpdates {
+            let intex = HabitsStore.shared.habits.count - 1
+            self.collectionView.insertItems(at: [IndexPath(row: intex, section: 1)])
+        }
     }
 }
 
