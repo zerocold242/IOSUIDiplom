@@ -285,6 +285,16 @@ class HabitViewController: UIViewController {
     }
     
     @objc private func deleteHabitButton() {
+        if let habit = habit {
+            let alertVC = UIAlertController(title: "Удалить привычку", message: "Вы действительно хотите удалить привычку \"\(habit.name)\"?", preferredStyle: UIAlertController.Style.alert)
+            let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+            let delete = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+                self?.deleteHabit()
+            }
+            alertVC.addAction(cancel)
+            alertVC.addAction(delete)
+            self.present(alertVC, animated: true, completion: nil)
+        }
     }
     
     override func viewDidLoad() {
