@@ -140,6 +140,8 @@ class HabitViewController: UIViewController {
                                                     action: #selector(cancelButton))
             navigationItem.leftBarButtonItem = leftBarButtonItem
             
+            deleteButton.isHidden = true
+            
         } else {
             
             navigationItem.title = "Править"
@@ -156,6 +158,8 @@ class HabitViewController: UIViewController {
                                                     target: self,
                                                     action: #selector(cancelButton))
             navigationItem.leftBarButtonItem = leftBarButtonItem
+            
+            deleteButton.isHidden = false
         }
     }
     
