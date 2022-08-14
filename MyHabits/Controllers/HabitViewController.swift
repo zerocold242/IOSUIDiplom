@@ -184,7 +184,6 @@ class HabitViewController: UIViewController {
             habitTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 7),
             habitTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             habitTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -65),
-            // habitTextField.heightAnchor.constraint(equalToConstant: 22),
             
             colorTitleLabel.topAnchor.constraint(equalTo: habitTextField.bottomAnchor, constant: 15),
             colorTitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),

@@ -49,11 +49,6 @@ class HabitsViewController: UIViewController {
         present(habitNavigationVC, animated: true, completion: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        collectionView.reloadData()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,7 +62,7 @@ class HabitsViewController: UIViewController {
 
 extension HabitsViewController: HabitViewControllerDelegate {
     func didReloadHabit(for index: Int) {}
-        
+    
     func didSaveNewHabit() {
         self.collectionView.performBatchUpdates {
             let intex = HabitsStore.shared.habits.count - 1

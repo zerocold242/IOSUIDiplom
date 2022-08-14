@@ -77,7 +77,6 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     func setProgress() {
         progressView.setProgress(HabitsStore.shared.todayProgress, animated: true)
     }
-
 }
 
 extension ProgressCollectionViewCell: CustomIdentifier {
