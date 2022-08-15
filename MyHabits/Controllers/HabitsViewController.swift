@@ -49,6 +49,12 @@ class HabitsViewController: UIViewController {
         present(habitNavigationVC, animated: true, completion: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
+        collectionView.setNeedsDisplay()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,17 +64,22 @@ class HabitsViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
+    
+    override func viewWillLayoutSubviews() {
+          collectionView.reloadData()
+          collectionView.setNeedsDisplay()
+      }
 }
 
 extension HabitsViewController: HabitViewControllerDelegate {
-    func didReloadHabit(for index: Int) {}
-    
+  
     func didSaveNewHabit() {
         self.collectionView.performBatchUpdates {
             let intex = HabitsStore.shared.habits.count - 1
             self.collectionView.insertItems(at: [IndexPath(row: intex, section: 1)])
         }
     }
+    func didReloadHabit(for index: Int) {}
 }
 
 extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
