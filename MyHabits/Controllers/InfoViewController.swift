@@ -55,12 +55,12 @@ class InfoViewController: UIViewController {
 """
         return label
     }()
-    
+
     private func setupNavigationBar() {
-         
-         navigationItem.title = "Информация"
-         navigationController?.navigationBar.isTranslucent = true
-     }
+        
+        navigationItem.title = "Информация"
+        navigationController?.navigationBar.isTranslucent = true
+    }
     
     private func setupConstraints() {
         
