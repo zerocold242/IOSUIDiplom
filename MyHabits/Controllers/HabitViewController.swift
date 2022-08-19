@@ -107,7 +107,7 @@ class HabitViewController: UIViewController {
     var onRemove: (() -> Void)?
     
     weak var delegate: HabitViewControllerDelegate?
-    
+
     private lazy var appearance = UINavigationBarAppearance()
     
     private var habit: Habit?
@@ -211,11 +211,6 @@ class HabitViewController: UIViewController {
             deleteButton.heightAnchor.constraint(equalToConstant: 22),
             deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-    }
-    
-    func deleteHabit() {
-        HabitsStore.shared.habits.removeAll{$0 == self.habit}
-        dismiss(animated: false, completion: onRemove)
     }
     
     private func delegat() {
