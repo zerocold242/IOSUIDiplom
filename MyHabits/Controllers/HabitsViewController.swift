@@ -59,10 +59,10 @@ class HabitsViewController: UIViewController {
         collectionView.delegate = self
     }
     
-    override func viewWillLayoutSubviews() {
-          collectionView.reloadData()
-          collectionView.setNeedsDisplay()
-      }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        collectionView.reloadData()
+    }
 }
 
 extension HabitsViewController: HabitViewControllerDelegate {
