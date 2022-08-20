@@ -213,6 +213,11 @@ class HabitViewController: UIViewController {
         ])
     }
     
+    func deleteHabit() {
+        HabitsStore.shared.habits.removeAll{$0 == self.habit}
+        dismiss(animated: false, completion: onRemove)
+    }
+    
     private func delegat() {
         if let habit = habit {
             habitTextField.text = habit.name
