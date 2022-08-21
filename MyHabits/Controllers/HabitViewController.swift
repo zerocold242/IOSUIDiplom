@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol HabitViewControllerDelegate: AnyObject {
+    func didSaveNewHabit()
+    func didReloadHabit(for index: Int)
+}
+
 class HabitViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
@@ -99,6 +104,10 @@ class HabitViewController: UIViewController {
         return button
     }()
     
+    var onRemove: (() -> Void)?
+    
+    weak var delegate: HabitViewControllerDelegate?
+
     private lazy var appearance = UINavigationBarAppearance()
     
     private var habit: Habit?
@@ -131,6 +140,8 @@ class HabitViewController: UIViewController {
                                                     action: #selector(cancelButton))
             navigationItem.leftBarButtonItem = leftBarButtonItem
             
+            deleteButton.isHidden = true
+            
         } else {
             
             navigationItem.title = "Править"
@@ -147,6 +158,8 @@ class HabitViewController: UIViewController {
                                                     target: self,
                                                     action: #selector(cancelButton))
             navigationItem.leftBarButtonItem = leftBarButtonItem
+            
+            deleteButton.isHidden = false
         }
     }
     
@@ -200,6 +213,11 @@ class HabitViewController: UIViewController {
         ])
     }
     
+    func deleteHabit() {
+        HabitsStore.shared.habits.removeAll{$0 == self.habit}
+        dismiss(animated: false, completion: onRemove)
+    }
+    
     private func delegat() {
         if let habit = habit {
             habitTextField.text = habit.name
@@ -238,12 +256,16 @@ class HabitViewController: UIViewController {
             habit.color = color
             habit.date = timePicker.date
             HabitsStore.shared.habits[index] = habit
-            dismiss(animated: true, completion: nil)
+            dismiss(animated: true) {
+                self.delegate?.didReloadHabit(for: index)
+            }
         } else {
             let habit = Habit(name: text, date: timePicker.date, color: color)
             let store = HabitsStore.shared
             store.habits.append(habit)
-            dismiss(animated: true, completion: nil)
+            dismiss(animated: true){
+                self.delegate?.didSaveNewHabit()
+            }
         }
     }
     
@@ -266,6 +288,16 @@ class HabitViewController: UIViewController {
     }
     
     @objc private func deleteHabitButton() {
+        if let habit = habit {
+            let alertVC = UIAlertController(title: "Удалить привычку", message: "Вы действительно хотите удалить привычку \"\(habit.name)\"?", preferredStyle: UIAlertController.Style.alert)
+            let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+            let delete = UIAlertAction(title: "Удалить", style: .destructive) { [weak self] _ in
+                self?.deleteHabit()
+            }
+            alertVC.addAction(cancel)
+            alertVC.addAction(delete)
+            self.present(alertVC, animated: true, completion: nil)
+        }
     }
     
     override func viewDidLoad() {

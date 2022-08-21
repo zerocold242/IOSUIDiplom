@@ -43,14 +43,10 @@ class HabitsViewController: UIViewController {
     @objc func addHabit() {
         
         let habitVC = HabitViewController(habit: nil)
+        habitVC.delegate = self
         let habitNavigationVC = UINavigationController(rootViewController: habitVC)
         habitNavigationVC.modalPresentationStyle = .fullScreen
         present(habitNavigationVC, animated: true, completion: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        collectionView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -62,6 +58,22 @@ class HabitsViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        collectionView.reloadData()
+    }
+}
+
+extension HabitsViewController: HabitViewControllerDelegate {
+  
+    func didSaveNewHabit() {
+        self.collectionView.performBatchUpdates {
+            let intex = HabitsStore.shared.habits.count - 1
+            self.collectionView.insertItems(at: [IndexPath(row: intex, section: 1)])
+        }
+    }
+    func didReloadHabit(for index: Int) {}
 }
 
 extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -79,14 +91,28 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProgressCollectionViewCell.identifier, for: indexPath) as! ProgressCollectionViewCell
+            guard  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProgressCollectionViewCell.identifier, for: indexPath) as? ProgressCollectionViewCell
+            else { return UICollectionViewCell() }
             cell.refreshProgress()
             return cell
+            
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HabitCollectionViewCell.identifier, for: indexPath) as! HabitCollectionViewCell
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HabitCollectionViewCell.identifier, for: indexPath) as? HabitCollectionViewCell
+            else { return UICollectionViewCell() }
             cell.habit = HabitsStore.shared.habits[indexPath.item]
-            cell.habitTrack = {collectionView.reloadSections(IndexSet(integer: 0))}
+            cell.habitTrack = {
+                let progressCollectionViewCell = collectionView.visibleCells.first(where: { $0 is ProgressCollectionViewCell }) as? ProgressCollectionViewCell
+                progressCollectionViewCell?.setProgress()
+            }
             return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            let habitDetailsVC = HabitDetailsViewController(habit: HabitsStore.shared.habits[indexPath.item])
+            navigationController?.pushViewController(habitDetailsVC, animated: true)
         }
     }
     
